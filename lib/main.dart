@@ -1,4 +1,4 @@
-import 'package:bedsheet_calc/curtainsCalc.dart';
+import 'package:bedsheet_calc/sample.dart';
 import 'package:bedsheet_calc/spreiBcKomplit.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -33,10 +33,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   bool colorSwitched = false;
   var logoImage;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController ukuranController = new TextEditingController();
-  List<String> _size = ['3 Kaki (100x200)', '4 Kaki (120x200)', '5 Kaki (160x200)', '6 Kaki (180x200)','7 Kaki (200x200)'];
-  String _selectSize;
 
   void changeTheme() async {
     if (colorSwitched) {
@@ -211,7 +208,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                     FlatButton.icon(
                                       onPressed: () {
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => kalkulatorGordyn()));
+                          MaterialPageRoute(builder: (context) => RadioButton()));
                                       },
                                       icon:   _actionList('assets/images/ic_curtains.png', 'Curtains Calc'),
                                       label: Text(''),
@@ -298,7 +295,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
         context: context,
         builder: (BuildContext context) {
           return Container(
-            height: 350,
+            height: MediaQuery.of(context).size.height*0.3,
             padding: EdgeInsets.all(10.0),
             child: ListView(
               children: <Widget>[
@@ -308,7 +305,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: MediaQuery.of(context).size.height*0.01,
                 ),
                 FlatButton(
                   color: Colors.yellow,
@@ -341,23 +338,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                       ),
                                       FlatButton(
                                         color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Step by Step',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        ),
-                                      ),
-                                      FlatButton(
-                                        color: Colors.yellow,
                                         onPressed: () {
                                           Navigator.of(context).push(
-                                              MaterialPageRoute(builder: (context) => spreiBcKomplit()));
+                                              MaterialPageRoute(builder: (context) => SpreiCalc()));
 
                                         },
                                         shape: new RoundedRectangleBorder(
@@ -393,11 +376,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     borderRadius: new BorderRadius.circular(10.0),
                   ),
                   textColor: flatButtonColor,
-                  child: Text('Sprei Complete (Sprei Set+Bedcover)',
+                  child: Text('Sprei Set (Complete) Recomended',
                   ),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: MediaQuery.of(context).size.height*0.01,
                 ),
                 FlatButton(
                   color: Colors.yellow,
@@ -424,20 +407,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         child: Container(
                                           width: MediaQuery.of(context).size.width*0.7,
                                           child: Text('Custome Advanced',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                      FlatButton(
-                                        color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Step by Step',
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
@@ -478,11 +447,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     borderRadius: new BorderRadius.circular(10.0),
                   ),
                   textColor: flatButtonColor,
-                  child: Text('Sprei Set (Sprei+Pillow Cover)',
+                  child: Text('Cover Only (Pillow Cover & Bolster Cover)',
                   ),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: MediaQuery.of(context).size.height*0.01,
                 ),
                 FlatButton(
                   color: Colors.yellow,
@@ -509,190 +478,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         child: Container(
                                           width: MediaQuery.of(context).size.width*0.7,
                                           child: Text('Custome Advanced',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                      FlatButton(
-                                        color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Step by Step',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                      FlatButton(
-                                        color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Standart Size',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                          ),
-                          actions: <Widget>[
-                            FlatButton(
-                              textColor: flatButtonColor,
-                              child: Text('cancle',),
-                              onPressed: () {
-                                Navigator.of(context).pop(true);
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  textColor: flatButtonColor,
-                  child: Text('Bedcover Only',
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                FlatButton(
-                  color: Colors.yellow,
-                  onPressed: () {
-                    return showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Option'),
-                          content: Container(
-                              height: MediaQuery.of(context).size.height*0.17,
-                              width: MediaQuery.of(context).size.width*0.8,
-                              child: Center(
-                                child: Container(
-                                  child: Column(
-                                    children: <Widget>[
-                                      FlatButton(
-                                        color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Custome Advanced',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                      FlatButton(
-                                        color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Step by Step',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                      FlatButton(
-                                        color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Standart Size',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )
-                          ),
-                          actions: <Widget>[
-                            FlatButton(
-                              textColor: flatButtonColor,
-                              child: Text('cancle',),
-                              onPressed: () {
-                                Navigator.of(context).pop(true);
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10.0),
-                  ),
-                  textColor: flatButtonColor,
-                  child: Text('Pillow Cover Only',
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                FlatButton(
-                  color: Colors.yellow,
-                  onPressed: () {
-                    return showDialog<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Option'),
-                          content: Container(
-                              height: MediaQuery.of(context).size.height*0.17,
-                              width: MediaQuery.of(context).size.width*0.8,
-                              child: Center(
-                                child: Container(
-                                  child: Column(
-                                    children: <Widget>[
-                                      FlatButton(
-                                        color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Custome Advanced',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                      FlatButton(
-                                        color: Colors.yellow,
-                                        onPressed: () {},
-                                        shape: new RoundedRectangleBorder(
-                                          borderRadius: new BorderRadius.circular(10.0),
-                                        ),
-                                        textColor: flatButtonColor,
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*0.7,
-                                          child: Text('Step by Step',
                                             textAlign: TextAlign.center,
                                           ),
                                         ),

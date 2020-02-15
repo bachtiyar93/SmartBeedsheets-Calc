@@ -1,17 +1,14 @@
-import 'dart:convert';
-import 'package:bedsheet_calc/bahasa.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-class spreiBcKomplit extends StatefulWidget {
-  spreiBcKomplit({Key key}) : super(key: key);
+class SpreiCalc extends StatefulWidget {
+  SpreiCalc({Key key}) : super(key: key);
 
   @override
-  _spreiBcKomplitState createState() => _spreiBcKomplitState();
+  _SpreiCalcState createState() => _SpreiCalcState();
 }
-class _spreiBcKomplitState extends State<spreiBcKomplit> {
+class _SpreiCalcState extends State<SpreiCalc> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   TextEditingController orderController = new TextEditingController();
@@ -39,7 +36,7 @@ class _spreiBcKomplitState extends State<spreiBcKomplit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Standar Size (Sprei Set + Bedcover)'),),
+      appBar: AppBar(title: Text('Standar Size Beedsheets'),),
       body:
       Form(
         key: _formKey,
@@ -195,7 +192,7 @@ class _spreiBcKomplitState extends State<spreiBcKomplit> {
                           {
                             setState(() {
                               _selectedTinggi = bon;
-                              heightController.text=_selectedTinggi as String;
+                              heightController.text=_selectedTinggi;
                             });
                           } ,
                           items: _jenisTinggi.map((location) {
@@ -322,150 +319,7 @@ class _spreiBcKomplitState extends State<spreiBcKomplit> {
                       new Expanded(
                         child: new FlatButton(
                           color: Colors.red,
-                          onPressed: () {
-                            return showDialog<void>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                if(bahanController.text=="Emboss"){hargaKain=34000;}
-                                else if(bahanController.text=="Katun CVC (Lokal)"){hargaKain=34000;}
-                                else if(bahanController.text=="Katun Jepang"){hargaKain=55000;}
-                                else if(bahanController.text=="Sutra Organik"){hargaKain=135000;}
-                                else if(bahanController.text=="Sutra Silk Thick"){hargaKain=75000;}
-                                else if(bahanController.text=="Sutra Silk Thin"){hargaKain=65000;}
-                                else if(bahanController.text=="Serat Bamboo"){hargaKain=155000;}
-                                else if(bahanController.text=="KingKoil"){hargaKain=125000;}
-                                else if(bahanController.text=="Panel (Jepang)"){hargaKain=135000;}
-                                //harga model
-                                if(_selectedmodel=="Karet"){
-                                  hargaModel=0;
-                                }else if(_selectedmodel=="Rimpel"){
-                                  if (sizeController.text=="3K 100x200"){
-                                    hargaModel=(1.8*hargaKain+15000)+((1.8*hargaKain+15000)*untung);
-                                  }else if (sizeController.text=="4K 120x200"){
-                                    hargaModel=(1.8*hargaKain+15000)+((1.8*hargaKain+15000)*untung);
-                                  }else {hargaModel=(2.4*hargaKain+20000)+((2.4*hargaKain+20000)*untung);}}
-                                  //Upah jahit
-                                  if (sizeController.text=="3K 100x200"){
-                                    upahJahit=22500;
-                                  }else if (sizeController.text=="4K 120x200"){
-                                    upahJahit=22500;
-                                  }else {upahJahit=25000;}
-                                  //Pemakaian kain
-                                  if (sizeController.text=="3K 100x200"){
-                                    pakaiKainBC=3.2;
-                                    upahJahitBC=25000;
-                                    bantalSpek="1 Pillow Cover + 1 Bolster Cover";
-                                    if(heightController.text=="20"){pakaiKain=2.3;}
-                                    else if(heightController.text=="25"){pakaiKain=2.5;}
-                                    else if(heightController.text=="30"){pakaiKain=2.7;}
-                                    else if(heightController.text=="35"){pakaiKain=2.9;}
-                                    else if (heightController.text=="40"){pakaiKain=3.1;}
-                                    else {pakaiKain=3.3;}
-                                  }else if (sizeController.text=="4K 120x200"){
-                                    pakaiKainBC=3.6;
-                                    upahJahitBC=25000;
-                                    bantalSpek="1 Pillow Cover + 1 Bolster Cover";
-                                    if(heightController.text=="20"){pakaiKain=2.5;}
-                                    else if(heightController.text=="25"){pakaiKain=2.7;}
-                                    else if(heightController.text=="30"){pakaiKain=2.9;}
-                                    else if(heightController.text=="35"){pakaiKain=3.1;}
-                                    else if (heightController.text=="40") {pakaiKain=3.3;}
-                                    else {pakaiKain=3.5;}
-                                  }else if (sizeController.text=="5K 160x200"){
-                                    pakaiKainBC=4.4;
-                                    upahJahitBC=30000;
-                                    bantalSpek="2 Pillow Cover + 1 Bolster Cover";
-                                    if(heightController.text=="20"){pakaiKain=4.0;}
-                                    else if(heightController.text=="25"){pakaiKain=4.2;}
-                                    else if(heightController.text=="30"){pakaiKain=4.4;}
-                                    else if(heightController.text=="35"){pakaiKain=4.6;}
-                                    else if (heightController.text=="40"){pakaiKain=4.8;}
-                                    else {pakaiKain=5;}
-                                  }else if (sizeController.text=="6K 180x200"){
-                                    pakaiKainBC=4.8;
-                                    upahJahitBC=30000;
-                                    bantalSpek="2 Pillow Cover + 2 Bolster Cover";
-                                    if(heightController.text=="20"){pakaiKain=4.2;}
-                                    else if(heightController.text=="25"){pakaiKain=4.4;}
-                                    else if(heightController.text=="30"){pakaiKain=4.6;}
-                                    else if(heightController.text=="35"){pakaiKain=4.8;}
-                                    else if (heightController.text=="40"){pakaiKain=5.0;}
-                                    else {pakaiKain=5.2;}
-                                  }else{
-                                    pakaiKainBC=5.2;
-                                    upahJahitBC=30000;
-                                    bantalSpek="2 Pillow Cover + 2 Bolster Cover";
-                                    if(heightController.text=="20"){pakaiKain=4.4;}
-                                    else if(heightController.text=="25"){pakaiKain=4.6;}
-                                    else if(heightController.text=="30"){pakaiKain=4.8;}
-                                    else if(heightController.text=="35"){pakaiKain=5.0;}
-                                    else if (heightController.text=="40"){pakaiKain=5.2;}
-                                    else {pakaiKain=5.4;}
-                                  }
-
-                                      bedcover=pakaiKainBC*hargaKain+upahJahitBC;
-                                      sizenya = pakaiKain*hargaKain+upahJahit+tas;
-                                      hargaCount=(sizenya*untung+sizenya)*double.tryParse(orderController.text)+hargaModel+(bedcover*untung+bedcover);
-
-
-                                return AlertDialog(
-                                  title: Text('Order Details /Spesifikasi'),
-                                  content: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: ListView(
-                                      children: <Widget>[
-                                        Text("to :"+customerController.text,
-                                          style: TextStyle(fontWeight: FontWeight.bold),
-                                        ),
-                                        Text("Sprei "+bahanController.text,
-                                        ),
-                                        Text("Size "+sizeController.text+"x"+heightController.text+"x"+orderController.text+"Set + Bedcover"),
-                                        Text("Include "+bantalSpek),
-                                        Text('Model '+modelController.text),
-                                        Text("Address to "+alamatController.text),
-                                        Text("Best Deals :"+' Rp. '+hargaCount.toString(),
-                                          style: TextStyle(fontWeight: FontWeight.bold)),
-                                        Text("Note / Details:"),
-                                        Text(rincianController.text),
-                                        Text(""),
-                                        Text(""),
-                                        Text(""),
-                                        Text("We make sure the best price we have provided. Does not include postage.",
-                                        textAlign: TextAlign.center,
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  actions: <Widget>[
-                                    FlatButton(
-                                      color: Colors.red,
-                                      child: Text('Kembali'),
-                                      onPressed: () {
-                                        Navigator.of(context).pop(true);
-                                      },
-                                    ),
-                                    FlatButton(
-                                      color: Colors.green,
-                                      child: Text('Order via Whatsapp'),
-                                      onPressed: ()  async {
-                                    var url =
-                                    'https://api.whatsapp.com/send?phone=+6287749169513&text=Hallo%20saya%20'+customerController.text+
-                                    '%0ASaya%20tertarik%20untuk%20memesan%20'+bahanController.text+'%20Ukuran%20'+sizeController.text+'x'+heightController.text+'%20sebanyak%20'+orderController.text+'%20Set%20+%20Bedcover'+
-                                    '%0AHarga%20dari%20aplikasi%20sebesar%20Rp.'+hargaCount.toString()+
-                                    '%0AAlamat%20pengantaran%20ke%20'+alamatController.text+
-                                    '%0ACatatan:%20'+rincianController.text;
-                                    if (await canLaunch(url)) {
-                                    await launch(url);
-                                    } else {
-                                    throw 'Could not launch $url';
-                                    }
-                                    },
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
+                          onPressed: check,
                           shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(30.0),
                           ),
@@ -502,39 +356,152 @@ class _spreiBcKomplitState extends State<spreiBcKomplit> {
     );
   }
 
-  check() {
+  check() async{
     final form = _formKey.currentState;
     if (form.validate()) {
       form.save();
-      prosesHitung();
-    }
-  }
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          if(bahanController.text=="Emboss"){hargaKain=34000;}
+          else if(bahanController.text=="Katun CVC (Lokal)"){hargaKain=34000;}
+          else if(bahanController.text=="Katun Jepang"){hargaKain=55000;}
+          else if(bahanController.text=="Sutra Organik"){hargaKain=135000;}
+          else if(bahanController.text=="Sutra Silk Thick"){hargaKain=75000;}
+          else if(bahanController.text=="Sutra Silk Thin"){hargaKain=65000;}
+          else if(bahanController.text=="Serat Bamboo"){hargaKain=155000;}
+          else if(bahanController.text=="KingKoil"){hargaKain=125000;}
+          else if(bahanController.text=="Panel (Jepang)"){hargaKain=135000;}
+          //harga model
+          if(_selectedmodel=="Karet"){
+            hargaModel=0;
+          }else if(_selectedmodel=="Rimpel"){
+            if (sizeController.text=="3K 100x200"){
+              hargaModel=(1.8*hargaKain+15000)+((1.8*hargaKain+15000)*untung);
+            }else if (sizeController.text=="4K 120x200"){
+              hargaModel=(1.8*hargaKain+15000)+((1.8*hargaKain+15000)*untung);
+            }else {hargaModel=(2.4*hargaKain+20000)+((2.4*hargaKain+20000)*untung);}}
+          //Upah jahit
+          if (sizeController.text=="3K 100x200"){
+            upahJahit=22500;
+          }else if (sizeController.text=="4K 120x200"){
+            upahJahit=22500;
+          }else {upahJahit=25000;}
+          //Pemakaian kain
+          if (sizeController.text=="3K 100x200"){
+            pakaiKainBC=3.2;
+            upahJahitBC=25000;
+            bantalSpek="1 Pillow Cover + 1 Bolster Cover";
+            if(heightController.text=="20"){pakaiKain=2.3;}
+            else if(heightController.text=="25"){pakaiKain=2.5;}
+            else if(heightController.text=="30"){pakaiKain=2.7;}
+            else if(heightController.text=="35"){pakaiKain=2.9;}
+            else if (heightController.text=="40"){pakaiKain=3.1;}
+            else {pakaiKain=3.3;}
+          }else if (sizeController.text=="4K 120x200"){
+            pakaiKainBC=3.6;
+            upahJahitBC=25000;
+            bantalSpek="1 Pillow Cover + 1 Bolster Cover";
+            if(heightController.text=="20"){pakaiKain=2.5;}
+            else if(heightController.text=="25"){pakaiKain=2.7;}
+            else if(heightController.text=="30"){pakaiKain=2.9;}
+            else if(heightController.text=="35"){pakaiKain=3.1;}
+            else if (heightController.text=="40") {pakaiKain=3.3;}
+            else {pakaiKain=3.5;}
+          }else if (sizeController.text=="5K 160x200"){
+            pakaiKainBC=4.4;
+            upahJahitBC=30000;
+            bantalSpek="2 Pillow Cover + 1 Bolster Cover";
+            if(heightController.text=="20"){pakaiKain=4.0;}
+            else if(heightController.text=="25"){pakaiKain=4.2;}
+            else if(heightController.text=="30"){pakaiKain=4.4;}
+            else if(heightController.text=="35"){pakaiKain=4.6;}
+            else if (heightController.text=="40"){pakaiKain=4.8;}
+            else {pakaiKain=5;}
+          }else if (sizeController.text=="6K 180x200"){
+            pakaiKainBC=4.8;
+            upahJahitBC=30000;
+            bantalSpek="2 Pillow Cover + 2 Bolster Cover";
+            if(heightController.text=="20"){pakaiKain=4.2;}
+            else if(heightController.text=="25"){pakaiKain=4.4;}
+            else if(heightController.text=="30"){pakaiKain=4.6;}
+            else if(heightController.text=="35"){pakaiKain=4.8;}
+            else if (heightController.text=="40"){pakaiKain=5.0;}
+            else {pakaiKain=5.2;}
+          }else{
+            pakaiKainBC=5.2;
+            upahJahitBC=30000;
+            bantalSpek="2 Pillow Cover + 2 Bolster Cover";
+            if(heightController.text=="20"){pakaiKain=4.4;}
+            else if(heightController.text=="25"){pakaiKain=4.6;}
+            else if(heightController.text=="30"){pakaiKain=4.8;}
+            else if(heightController.text=="35"){pakaiKain=5.0;}
+            else if (heightController.text=="40"){pakaiKain=5.2;}
+            else {pakaiKain=5.4;}
+          }
 
-  prosesHitung() async {
-    String _customer = customerController.text;
-    String _alamat = alamatController.text;
-    String _rincian = rincianController.text;
-    String _size = sizeController.text+"x"+heightController.text;
-    String _bahan = bahanController.text;
-    String _jumlahOrder = orderController.text;
+          bedcover=pakaiKainBC*hargaKain+upahJahitBC;
+          sizenya = pakaiKain*hargaKain+upahJahit+tas;
+          hargaCount=(sizenya*untung+sizenya)*double.tryParse(orderController.text)+hargaModel+(bedcover*untung+bedcover);
 
 
-
-    try {final response = await http.post(SumberApi.dataHarga, body: {
-      "id_customer":_customer,
-      "id_alamat": _alamat,
-      "id_rincian":_rincian,
-    });
-    final data = jsonDecode(response.body);
-    String pesan = data['message'];
-    if (response.statusCode < 200 || response.statusCode > 300) {
-      print(response.statusCode);
-      throw new Exception('Failed to insert data');
-    } else {
-    }
-    } catch (e) {
-      print(e.toString());
-      return null;
+          return AlertDialog(
+            title: Text('Order Details /Spesifikasi'),
+            content: Container(
+              width: MediaQuery.of(context).size.width,
+              child: ListView(
+                children: <Widget>[
+                  Text("to :"+customerController.text,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text("Sprei "+bahanController.text,
+                  ),
+                  Text("Size "+sizeController.text+"x"+heightController.text+"x"+orderController.text+"Set + Bedcover"),
+                  Text("Include "+bantalSpek),
+                  Text('Model '+modelController.text),
+                  Text("Address to "+alamatController.text),
+                  Text("Best Deals :"+' Rp. '+hargaCount.toString(),
+                      style: TextStyle(fontWeight: FontWeight.bold)),
+                  Text("Note / Details:"),
+                  Text(rincianController.text),
+                  Text(""),
+                  Text(""),
+                  Text(""),
+                  Text("We make sure the best price we have provided. Does not include postage.",
+                    textAlign: TextAlign.center,
+                  )
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                color: Colors.red,
+                child: Text('Kembali'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+              FlatButton(
+                color: Colors.green,
+                child: Text('Order via Whatsapp'),
+                onPressed: ()  async {
+                  var url =
+                      'https://api.whatsapp.com/send?phone=+6287749169513&text=Hallo%20saya%20'+customerController.text+
+                          '%0ASaya%20tertarik%20untuk%20memesan%20'+bahanController.text+'%20Ukuran%20'+sizeController.text+'x'+heightController.text+'%20sebanyak%20'+orderController.text+'%20Set%20+%20Bedcover'+
+                          '%0AHarga%20dari%20aplikasi%20sebesar%20Rp.'+hargaCount.toString()+
+                          '%0AAlamat%20pengantaran%20ke%20'+alamatController.text+
+                          '%0ACatatan:%20'+rincianController.text;
+                  if (await canLaunch(url)) {
+                    await launch(url);
+                  } else {
+                    throw 'Could not launch $url';
+                  }
+                },
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 }
