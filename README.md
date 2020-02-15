@@ -1,6 +1,7 @@
 # bedsheet_calc
 
-A new Flutter application.
+This app build for my Shop Sweet Room Medan.
+Website on https://sweetroommedan.com
 
 ## Getting Started
 
@@ -14,3 +15,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+Please tag me if you need my code.
+For Information you can call me or use Whatsapp on +62 877 6622 6999

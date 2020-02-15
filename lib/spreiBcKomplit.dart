@@ -19,10 +19,13 @@ class _SpreiCalcState extends State<SpreiCalc> {
   TextEditingController bahanController = new TextEditingController();
   TextEditingController sizeController = new TextEditingController();
   TextEditingController modelController = new TextEditingController();
+  TextEditingController pilihanBCController = new TextEditingController();
 
 
   List<String> _jenisTinggi = ["20","25","30","35","40","45"];
   String _selectedTinggi;
+  List<String> _pilihanBC = ["Yes","No"];
+  String _selectedBC;
   List<String> _jenisBahan = ['Emboss', 'Katun CVC (Lokal)', 'Katun Jepang', 'Sutra Organik', 'Sutra Silk Thick','Sutra Silk Thin', 'Serat Bamboo','KingKoil','Panel (Jepang)'];
   String _selectedBahan;
   List<String> _jenisSize = ['3K 100x200', '4K 120x200', '5K 160x200', '6K 180x200', '7K 200x200'];
@@ -107,19 +110,6 @@ class _SpreiCalcState extends State<SpreiCalc> {
                           }).toList(),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin:
-                  const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
                       Expanded(
                         child: new DropdownButton(
                           hint: Text('Model'), // Not necessary for Option 1
@@ -171,19 +161,6 @@ class _SpreiCalcState extends State<SpreiCalc> {
                           }).toList(),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin:
-                  const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
                       Expanded(
                         child: new DropdownButton(
                           hint: Text('Height'), // Not necessary for Option 1
@@ -304,6 +281,39 @@ class _SpreiCalcState extends State<SpreiCalc> {
                               fillColor: Colors.white70),
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin:
+                  const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Expanded(child: Text("Include with Bedcover?")),
+                      Expanded(
+                        child: new DropdownButton(
+                          hint: Text('No'), // Not necessary for Option 1
+                          value: _selectedBC,
+                          onChanged: (bc)
+                          {
+                            setState(() {
+                              _selectedBC = bc;
+                              pilihanBCController.text=_selectedBC;
+                            });
+                          } ,
+                          items: _pilihanBC.map((location) {
+                            return DropdownMenuItem(
+                              child: new Text(location),
+                              value: location,
+                            );
+                          }).toList(),
                         ),
                       ),
                     ],
@@ -440,9 +450,14 @@ class _SpreiCalcState extends State<SpreiCalc> {
             else {pakaiKain=5.4;}
           }
 
-          bedcover=pakaiKainBC*hargaKain+upahJahitBC;
+          if (pilihanBCController.text=="Yes"){
+            bedcover=(pakaiKainBC*hargaKain+upahJahitBC)*untung+(pakaiKainBC*hargaKain+upahJahitBC);
+          } else {
+            bedcover=0;
+          }
+
           sizenya = pakaiKain*hargaKain+upahJahit+tas;
-          hargaCount=(sizenya*untung+sizenya)*double.tryParse(orderController.text)+hargaModel+(bedcover*untung+bedcover);
+          hargaCount=(sizenya*untung+sizenya)*double.tryParse(orderController.text)+hargaModel+bedcover;
 
 
           return AlertDialog(
